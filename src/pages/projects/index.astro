@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContentPreview from '../../components/ContentPreview.astro';
+import { getPublishedProjects } from '../../lib/content';
+
+const projects = (await getPublishedProjects()).map((project) => ({
+  title: project.data.title,
+  summary: project.data.summary,
+  href: `/projects/${project.id}/`,
+  meta: project.data.status,
+  tags: project.data.technologies,
+}));
+---
+
+<BaseLayout
+  title="Projects — Carlos Eduardo de Souza"
+  description="Selected data engineering projects, experiments, and tools."
+>
+  <div class="archive-intro shell">
+    <p class="eyebrow">Archive / Projects</p>
+    <h1>Systems explored,<br /><em>lessons kept.</em></h1>
+    <p>Projects built to test ideas, sharpen practice, and solve concrete problems.</p>
+  </div>
+  <ContentPreview
+    eyebrow="Selected work"
+    title="Project archive"
+    emptyTitle="No public projects yet."
+    emptyText="The first case study will appear here once the work and its lessons are ready to share."
+    archiveHref="/projects/"
+    items={projects}
+  />
+</BaseLayout>

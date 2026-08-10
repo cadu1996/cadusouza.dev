@@ -1,0 +1,27 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  eyebrow: string;
+}
+
+const { title, description, eyebrow } = Astro.props;
+---
+
+<BaseLayout title={`${title} — Carlos Eduardo de Souza`} description={description}>
+  <article class="content-page shell narrow-shell">
+    <header class="content-header reveal">
+      <a class="back-link" href={eyebrow === 'Writing' ? '/writing/' : '/projects/'}>
+        <span aria-hidden="true">←</span> {eyebrow}
+      </a>
+      <h1>{title}</h1>
+      <p class="content-description">{description}</p>
+      <slot name="meta" />
+    </header>
+    <div class="prose">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

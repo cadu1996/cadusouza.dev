@@ -1,0 +1,38 @@
+---
+import { siteConfig } from '../config/site';
+---
+
+<section class="hero shell" aria-labelledby="hero-title">
+  <div class="hero-copy reveal">
+    <p class="eyebrow"><span class="status-dot"></span> Data systems · Cloud · Analytics</p>
+    <h1 id="hero-title">
+      <span>{siteConfig.name}</span>
+      <em>{siteConfig.role}</em>
+    </h1>
+    <p class="hero-intro">
+      I build dependable data foundations and turn complexity into systems people can trust.
+    </p>
+  </div>
+
+  <div class="data-map reveal reveal-delay" aria-label="Abstract data pipeline: source, process, and insight">
+    <div class="map-grid" aria-hidden="true"></div>
+    <div class="flow-line flow-line-one" aria-hidden="true"></div>
+    <div class="flow-line flow-line-two" aria-hidden="true"></div>
+    <div class="flow-node node-source">
+      <span class="node-index">01</span>
+      <strong>Source</strong>
+      <small>raw signals</small>
+    </div>
+    <div class="flow-node node-process">
+      <span class="node-index">02</span>
+      <strong>Shape</strong>
+      <small>reliable models</small>
+    </div>
+    <div class="flow-node node-insight">
+      <span class="node-index">03</span>
+      <strong>Serve</strong>
+      <small>useful outcomes</small>
+    </div>
+    <p class="map-caption">A practice of making data useful.</p>
+  </div>
+</section>

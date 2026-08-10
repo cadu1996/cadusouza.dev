@@ -1,0 +1,28 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { render } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import { getPublishedProjects } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const projects = await getPublishedProjects();
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+---
+
+<ContentLayout title={project.data.title} description={project.data.summary} eyebrow="Projects">
+  <div slot="meta" class="article-meta">
+    <span>{project.data.status}</span>
+    {project.data.technologies.length > 0 && <span>{project.data.technologies.join(' · ')}</span>}
+    {project.data.repositoryUrl && <a href={project.data.repositoryUrl}>Source ↗</a>}
+    {project.data.demoUrl && <a href={project.data.demoUrl}>Demo ↗</a>}
+  </div>
+  <Content />
+</ContentLayout>

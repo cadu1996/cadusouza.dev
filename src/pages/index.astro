@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Experience from '../components/Experience.astro';
+import ContentPreview from '../components/ContentPreview.astro';
+import { getPublishedPosts, getPublishedProjects } from '../lib/content';
+
+const posts = (await getPublishedPosts()).slice(0, 3).map((post) => ({
+  title: post.data.title,
+  summary: post.data.description,
+  href: `/writing/${post.id}/`,
+  meta: post.data.publishedAt.toLocaleDateString('en', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  }),
+  tags: post.data.tags,
+}));
+
+const projects = (await getPublishedProjects()).slice(0, 3).map((project) => ({
+  title: project.data.title,
+  summary: project.data.summary,
+  href: `/projects/${project.id}/`,
+  meta: project.data.status,
+  tags: project.data.technologies,
+}));
+---
+
+<BaseLayout>
+  <Hero />
+
+  <section class="section about shell" id="about" aria-labelledby="about-title">
+    <div class="section-heading">
+      <p class="eyebrow">01 / About</p>
+      <h2 id="about-title">Engineering data with clarity and purpose.</h2>
+    </div>
+    <div class="about-copy">
+      <p class="lead">
+        I'm a Data Engineer with a background in Physics Engineering, drawn to the point where
+        rigorous thinking meets practical systems.
+      </p>
+      <p>
+        Since 2022, I have worked across cloud data environments, beginning with GCP and now
+        focusing on Azure. I am currently deepening that practice through an operations-focused
+        MBA in Data Science and Data Analytics at Poli-USP PRO.
+      </p>
+    </div>
+  </section>
+
+  <Experience />
+
+  <ContentPreview
+    eyebrow="03 / Writing"
+    title="Notes from the work."
+    emptyTitle="The first note is taking shape."
+    emptyText="This space will hold practical lessons on data engineering, cloud platforms, and the decisions behind reliable systems."
+    archiveHref="/writing/"
+    items={posts}
+  />
+
+  <ContentPreview
+    eyebrow="04 / Projects"
+    title="Things built to learn."
+    emptyTitle="Projects will land here soon."
+    emptyText="A considered selection of data systems, experiments, and tools will be documented here as they become ready to share."
+    archiveHref="/projects/"
+    items={projects}
+  />
+</BaseLayout>

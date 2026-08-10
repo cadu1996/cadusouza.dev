@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContentPreview from '../../components/ContentPreview.astro';
+import { getPublishedPosts } from '../../lib/content';
+
+const posts = (await getPublishedPosts()).map((post) => ({
+  title: post.data.title,
+  summary: post.data.description,
+  href: `/writing/${post.id}/`,
+  meta: post.data.publishedAt.toLocaleDateString('en', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }),
+  tags: post.data.tags,
+}));
+---
+
+<BaseLayout
+  title="Writing — Carlos Eduardo de Souza"
+  description="Notes on data engineering, cloud platforms, and building reliable systems."
+>
+  <div class="archive-intro shell">
+    <p class="eyebrow">Archive / Writing</p>
+    <h1>Working notes,<br /><em>made useful.</em></h1>
+    <p>Observations from building data systems and learning in public.</p>
+  </div>
+  <ContentPreview
+    eyebrow="All entries"
+    title="Writing archive"
+    emptyTitle="No published notes yet."
+    emptyText="The first entry is in progress. It will appear here when it is ready to be useful."
+    archiveHref="/writing/"
+    items={posts}
+  />
+</BaseLayout>

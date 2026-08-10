@@ -1,0 +1,75 @@
+---
+import '@fontsource-variable/newsreader';
+import '@fontsource-variable/ibm-plex-sans';
+import '@fontsource/ibm-plex-mono/400.css';
+import '../styles/global.css';
+import { siteConfig } from '../config/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${siteConfig.name} — ${siteConfig.role}`,
+  description = siteConfig.description,
+} = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, siteConfig.siteUrl);
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#101210" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content={siteConfig.name} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="wordmark" href="/" aria-label={`${siteConfig.name}, home`}>
+          <span aria-hidden="true">CE</span>
+          <span class="wordmark-dot" aria-hidden="true"></span>
+        </a>
+        <nav aria-label="Primary navigation">
+          <ul class="nav-list">
+            {siteConfig.navigation.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  aria-current={currentPath === item.href ? 'page' : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main id="main-content">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <p>{siteConfig.name}</p>
+        <p>Built with care and Astro.</p>
+        <p>© {new Date().getFullYear()}</p>
+      </div>
+    </footer>
+  </body>
+</html>
