@@ -3,10 +3,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContentPreview from '../../components/ContentPreview.astro';
 import { getPublishedPosts } from '../../lib/content';
 
+const baseUrl = import.meta.env.BASE_URL;
+const withBase = (path: string) => `${baseUrl}${path.replace(/^\/+/, '')}`;
+
 const posts = (await getPublishedPosts()).map((post) => ({
   title: post.data.title,
   summary: post.data.description,
-  href: `/writing/${post.id}/`,
+  href: withBase(`/writing/${post.id}/`),
   meta: post.data.publishedAt.toLocaleDateString('en', {
     year: 'numeric',
     month: 'long',
@@ -30,7 +33,7 @@ const posts = (await getPublishedPosts()).map((post) => ({
     title="Writing archive"
     emptyTitle="No published notes yet."
     emptyText="The first entry is in progress. It will appear here when it is ready to be useful."
-    archiveHref="/writing/"
+    archiveHref={withBase('/writing/')}
     items={posts}
   />
 </BaseLayout>

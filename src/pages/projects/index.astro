@@ -3,10 +3,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContentPreview from '../../components/ContentPreview.astro';
 import { getPublishedProjects } from '../../lib/content';
 
+const baseUrl = import.meta.env.BASE_URL;
+const withBase = (path: string) => `${baseUrl}${path.replace(/^\/+/, '')}`;
+
 const projects = (await getPublishedProjects()).map((project) => ({
   title: project.data.title,
   summary: project.data.summary,
-  href: `/projects/${project.id}/`,
+  href: withBase(`/projects/${project.id}/`),
   meta: project.data.status,
   tags: project.data.technologies,
 }));
@@ -26,7 +29,7 @@ const projects = (await getPublishedProjects()).map((project) => ({
     title="Project archive"
     emptyTitle="No public projects yet."
     emptyText="The first case study will appear here once the work and its lessons are ready to share."
-    archiveHref="/projects/"
+    archiveHref={withBase('/projects/')}
     items={projects}
   />
 </BaseLayout>

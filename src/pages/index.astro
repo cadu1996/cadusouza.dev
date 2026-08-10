@@ -5,10 +5,13 @@ import Experience from '../components/Experience.astro';
 import ContentPreview from '../components/ContentPreview.astro';
 import { getPublishedPosts, getPublishedProjects } from '../lib/content';
 
+const baseUrl = import.meta.env.BASE_URL;
+const withBase = (path: string) => `${baseUrl}${path.replace(/^\/+/, '')}`;
+
 const posts = (await getPublishedPosts()).slice(0, 3).map((post) => ({
   title: post.data.title,
   summary: post.data.description,
-  href: `/writing/${post.id}/`,
+  href: withBase(`/writing/${post.id}/`),
   meta: post.data.publishedAt.toLocaleDateString('en', {
     year: 'numeric',
     month: 'short',
@@ -20,7 +23,7 @@ const posts = (await getPublishedPosts()).slice(0, 3).map((post) => ({
 const projects = (await getPublishedProjects()).slice(0, 3).map((project) => ({
   title: project.data.title,
   summary: project.data.summary,
-  href: `/projects/${project.id}/`,
+  href: withBase(`/projects/${project.id}/`),
   meta: project.data.status,
   tags: project.data.technologies,
 }));
@@ -54,7 +57,7 @@ const projects = (await getPublishedProjects()).slice(0, 3).map((project) => ({
     title="Notes from the work."
     emptyTitle="The first note is taking shape."
     emptyText="This space will hold practical lessons on data engineering, cloud platforms, and the decisions behind reliable systems."
-    archiveHref="/writing/"
+    archiveHref={withBase('/writing/')}
     items={posts}
   />
 
@@ -63,7 +66,7 @@ const projects = (await getPublishedProjects()).slice(0, 3).map((project) => ({
     title="Things built to learn."
     emptyTitle="Projects will land here soon."
     emptyText="A considered selection of data systems, experiments, and tools will be documented here as they become ready to share."
-    archiveHref="/projects/"
+    archiveHref={withBase('/projects/')}
     items={projects}
   />
 </BaseLayout>
