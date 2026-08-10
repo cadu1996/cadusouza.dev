@@ -6,7 +6,7 @@ import ContentPreview from '../components/ContentPreview.astro';
 import { getPublishedPosts, getPublishedProjects } from '../lib/content';
 
 const baseUrl = import.meta.env.BASE_URL;
-const withBase = (path: string) => `${baseUrl}${path.replace(/^\/+/, '')}`;
+const withBase = (path: string) => `${baseUrl.replace(/\/$/, '')}/${path.replace(/^\/+/, '')}`;
 
 const posts = (await getPublishedPosts()).slice(0, 3).map((post) => ({
   title: post.data.title,
