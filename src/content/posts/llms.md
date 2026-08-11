@@ -1,7 +1,7 @@
 ---
 title: Faustus agent
 description: Faustus is a CLI-first agentic data harness that unifies data engineering, quality, analytics, exploration, and ML workflows to take data from ingestion to reliable, production-ready outcomes.
-publishedAt: 2026-08-10
+publishedAt: 2026-08-11
 tags:
   - data-engineering
 draft: false
